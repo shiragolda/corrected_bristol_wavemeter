@@ -8,12 +8,8 @@ import ast
 import tkinter as tk
 from tkinter import font
 
-os.chdir("/home/labuser/googledrive/Calcium/code/calcium_control")
 from bristol_fos_v2 import FOS
 from zmqPublisher import zmqPublisher
-
-# SAVE_FOLDER  = '/home/labuser/googledrive/Calcium/data/wavemeter'
-#SAVE_FOLDER  = os.getcwd()
 
 """
 List of hyperfine cs D2 F=4->F' lines in GHz:
@@ -85,10 +81,8 @@ class Wavemeter():
             self.filepath = os.path.join(time_stamp+'.txt')
         while(True):
             try:
-                #new_value = self.read_wavemeter()
                 frequency,power = self.read_frequency_power()
                 new_value = (frequency,power)
-                # self.publisher.publish_data(new_value,prnt=True)
                 if(save):
                     now = time.time()
                     new_line=str(now)+','+str(new_value)
@@ -182,14 +176,12 @@ class WavemeterGUI():
         diff_array = [(x-i) for i in self.text_widths]
         item_index = diff_array.index(np.min([n for n in diff_array if n>0]))
         self.frequency_font = self.font_obj_list[item_index]
-        #print(self.frequency_font['size'])
 
     def font_resize(self,event=None):
         x = self.root.winfo_width()
         y = self.root.winfo_height()
         xp = self.frequency_label.winfo_width()
         yp = self.frequency_label.winfo_height()
-        #print('root: %i x %i, label: %i x %i'%(x,y,xp,yp))
 
         self.calc_best_font_size(x)
         self.frequency_label.config(font=self.frequency_font)
@@ -197,4 +189,4 @@ class WavemeterGUI():
 
 
 if __name__ == "__main__":
-    wm = Wavemeter() #will only run when entire file is run, not when modules are imported
+    wm = Wavemeter()
